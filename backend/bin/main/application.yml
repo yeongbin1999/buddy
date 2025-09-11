@@ -1,0 +1,88 @@
+spring:
+  application:
+    name: buddy-backend
+
+  config:
+    import: optional:file:.env   # .env \uD30C\uC77C\uC5D0\uC11C \uD658\uACBD\uBCC0\uC218 \uBD88\uB7EC\uC624\uAE30
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true                    # SQL \uD3EC\uB9F7\uD305\uD574\uC11C \uCD9C\uB825
+        highlight_sql: true                 # SQL \uC0C9\uC0C1 \uD558\uC774\uB77C\uC774\uD2B8
+        use_sql_comments: true              # SQL\uC5D0 \uC8FC\uC11D \uCD94\uAC00
+        use-new-id-generator-mappings: true # \uC0C8\uB85C\uC6B4 ID \uC0DD\uC131 \uC804\uB7B5 \uC0AC\uC6A9
+        default_batch_fetch_size: 50        # Lazy \uB85C\uB529 \uC2DC Batch Fetch \uCD5C\uC801\uD654 (N+1 \uBB38\uC81C \uC644\uD654)
+        generate_statistics: true           # Hibernate \uD1B5\uACC4 \uCD9C\uB825 (\uCE90\uC2DC \uD788\uD2B8\uC728, \uCFFC\uB9AC \uD69F\uC218 \uB4F1)
+
+  datasource:
+    url: jdbc:h2:./db_dev;MODE=MySQL   # H2 \uB370\uC774\uD130\uBCA0\uC774\uC2A4 (MySQL \uD638\uD658 \uBAA8\uB4DC)
+    driver-class-name: org.h2.Driver   # H2 \uB4DC\uB77C\uC774\uBC84
+    username: sa                       # \uAE30\uBCF8 \uC0AC\uC6A9\uC790
+    password:                          # \uBE44\uBC00\uBC88\uD638 \uC5C6\uC74C
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false  # \uBE48 \uAC1D\uCCB4 \uC9C1\uB82C\uD654 \uC2DC \uC5D0\uB7EC \uBC29\uC9C0
+
+  data:
+    redis:
+      host: localhost      # Redis \uD638\uC2A4\uD2B8
+      port: 6379           # Redis \uD3EC\uD2B8
+      password:            # Redis \uBE44\uBC00\uBC88\uD638 \uC5C6\uC74C
+      timeout: 6000ms      # \uC5F0\uACB0 \uD0C0\uC784\uC544\uC6C3 (6\uCD08)
+
+springdoc:
+  default-produces-media-type: application/json;charset=UTF-8   # API \uC751\uB2F5 \uAE30\uBCF8 Content-Type
+  api-docs:
+    enabled: true                       # API \uBB38\uC11C(JSON) \uD65C\uC131\uD654
+  swagger-ui:
+    enabled: true                       # Swagger UI \uD65C\uC131\uD654
+    path: /swagger-ui.html              # Swagger UI \uC811\uC18D \uACBD\uB85C
+  override-with-generic-response: false # Swagger \uC751\uB2F5 \uAE30\uBCF8 \uB36E\uC5B4\uC4F0\uAE30 \uC5EC\uBD80
+
+logging:
+  level:
+    com.back: DEBUG                                     # com.back \uD328\uD0A4\uC9C0 \uB85C\uADF8 \uB808\uBCA8
+    org.hibernate.SQL: DEBUG                            # SQL \uB85C\uADF8 \uCD9C\uB825
+    org.hibernate.orm.jdbc.bind: TRACE                  # SQL \uBC14\uC778\uB529 \uB85C\uADF8 (\uD30C\uB77C\uBBF8\uD130 \uAC12)
+    org.hibernate.orm.jdbc.extract: TRACE               # SQL \uACB0\uACFC \uCD94\uCD9C \uB85C\uADF8
+    org.springframework.transaction.interceptor: TRACE  # \uD2B8\uB79C\uC7AD\uC158 \uB3D9\uC791 \uB85C\uADF8
+
+jwt:
+  secret: ${JWT_SECRET:3f1e2a0e-8e8f-4c0a-9d3f-b3fae09e6d5a}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:PT15M}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:PT336H}
+
+cookie:
+  secure: false   # HTTPS \uBCF4\uC548 \uCFE0\uD0A4 \uAC15\uC81C \uC5EC\uBD80
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"   # /actuator/health \uB9CC \uB178\uCD9C
+  endpoint:
+    health:
+      show-details: never   # Health \uC0C1\uC138 \uC815\uBCF4 \uBE44\uACF5\uAC1C
+
+oauth2:
+  google:
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+    token-uri: https://oauth2.googleapis.com/token
+    user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    client-secret: ${KAKAO_CLIENT_SECRET}
+    token-uri: https://kauth.kakao.com/oauth/token
+    user-info-uri: https://kapi.kakao.com/v2/user/me
+  naver:
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret: ${NAVER_CLIENT_SECRET}
+    token-uri: https://nid.naver.com/oauth2.0/token
+    user-info-uri: https://openapi.naver.com/v1/nid/me
