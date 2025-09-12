@@ -14,16 +14,16 @@ import java.time.LocalDate
 
 @Entity
 @Table(name = "users")
-class User(
+class User : BaseEntity() {
 
     @Column(nullable = true, length = 50)
-    var name: String? = null,
+    var name: String? = null
 
     @Column(nullable = true)
-    var birthdate: LocalDate? = null,
+    var birthdate: LocalDate? = null
 
     @Column(nullable = true, length = 100)
-    var address: String? = null,
+    var address: String? = null
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
@@ -32,10 +32,9 @@ class User(
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "interest")
-    var interests: MutableSet<InterestType> = mutableSetOf(),
+    var interests: MutableSet<InterestType> = mutableSetOf()
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     var status: UserStatus = UserStatus.INCOMPLETE
-
-) : BaseEntity()
+}

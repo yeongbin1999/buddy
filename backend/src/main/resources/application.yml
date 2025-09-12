@@ -3,7 +3,12 @@ spring:
     name: buddy-backend
 
   config:
-    import: optional:file:.env   # .env \uD30C\uC77C\uC5D0\uC11C \uD658\uACBD\uBCC0\uC218 \uBD88\uB7EC\uC624\uAE30
+    import: optional:file:.env   # .env 파일에서 환경변수 불러오기
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.session.SessionAutoConfiguration
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -12,63 +17,60 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true                    # SQL \uD3EC\uB9F7\uD305\uD574\uC11C \uCD9C\uB825
-        highlight_sql: true                 # SQL \uC0C9\uC0C1 \uD558\uC774\uB77C\uC774\uD2B8
-        use_sql_comments: true              # SQL\uC5D0 \uC8FC\uC11D \uCD94\uAC00
-        use-new-id-generator-mappings: true # \uC0C8\uB85C\uC6B4 ID \uC0DD\uC131 \uC804\uB7B5 \uC0AC\uC6A9
-        default_batch_fetch_size: 50        # Lazy \uB85C\uB529 \uC2DC Batch Fetch \uCD5C\uC801\uD654 (N+1 \uBB38\uC81C \uC644\uD654)
-        generate_statistics: true           # Hibernate \uD1B5\uACC4 \uCD9C\uB825 (\uCE90\uC2DC \uD788\uD2B8\uC728, \uCFFC\uB9AC \uD69F\uC218 \uB4F1)
+        format_sql: true                    # SQL 포맷팅해서 출력
+        highlight_sql: true                 # SQL 색상 하이라이트
+        use_sql_comments: true              # SQL에 주석 추가
+        use-new-id-generator-mappings: true # 새로운 ID 생성 전략 사용
+        default_batch_fetch_size: 50        # Lazy 로딩 시 Batch Fetch 최적화 (N+1 문제 완화)
+        generate_statistics: true           # Hibernate 통계 출력 (캐시 히트율, 쿼리 횟수 등)
 
   datasource:
-    url: jdbc:h2:./db_dev;MODE=MySQL   # H2 \uB370\uC774\uD130\uBCA0\uC774\uC2A4 (MySQL \uD638\uD658 \uBAA8\uB4DC)
-    driver-class-name: org.h2.Driver   # H2 \uB4DC\uB77C\uC774\uBC84
-    username: sa                       # \uAE30\uBCF8 \uC0AC\uC6A9\uC790
-    password:                          # \uBE44\uBC00\uBC88\uD638 \uC5C6\uC74C
+    url: jdbc:h2:./db_dev;MODE=MySQL   # H2 데이터베이스 (MySQL 호환 모드)
+    driver-class-name: org.h2.Driver   # H2 드라이버
+    username: sa                       # 기본 사용자
+    password:                          # 비밀번호 없음
 
   jackson:
     serialization:
-      fail-on-empty-beans: false  # \uBE48 \uAC1D\uCCB4 \uC9C1\uB82C\uD654 \uC2DC \uC5D0\uB7EC \uBC29\uC9C0
+      fail-on-empty-beans: false  # 빈 객체 직렬화 시 에러 방지
 
   data:
     redis:
-      host: localhost      # Redis \uD638\uC2A4\uD2B8
-      port: 6379           # Redis \uD3EC\uD2B8
-      password:            # Redis \uBE44\uBC00\uBC88\uD638 \uC5C6\uC74C
-      timeout: 6000ms      # \uC5F0\uACB0 \uD0C0\uC784\uC544\uC6C3 (6\uCD08)
+      host: localhost      # Redis 호스트
+      port: 6379           # Redis 포트
+      password:            # Redis 비밀번호 없음
+      timeout: 6000ms      # 연결 타임아웃 (6초)
 
 springdoc:
-  default-produces-media-type: application/json;charset=UTF-8   # API \uC751\uB2F5 \uAE30\uBCF8 Content-Type
+  default-produces-media-type: application/json;charset=UTF-8   # API 응답 기본 Content-Type
   api-docs:
-    enabled: true                       # API \uBB38\uC11C(JSON) \uD65C\uC131\uD654
+    enabled: true                       # API 문서(JSON) 활성화
   swagger-ui:
-    enabled: true                       # Swagger UI \uD65C\uC131\uD654
-    path: /swagger-ui.html              # Swagger UI \uC811\uC18D \uACBD\uB85C
-  override-with-generic-response: false # Swagger \uC751\uB2F5 \uAE30\uBCF8 \uB36E\uC5B4\uC4F0\uAE30 \uC5EC\uBD80
+    enabled: true                       # Swagger UI 활성화
+    path: /swagger-ui.html              # Swagger UI 접속 경로
+  override-with-generic-response: false # Swagger 응답 기본 덮어쓰기 여부
 
 logging:
   level:
-    com.back: DEBUG                                     # com.back \uD328\uD0A4\uC9C0 \uB85C\uADF8 \uB808\uBCA8
-    org.hibernate.SQL: DEBUG                            # SQL \uB85C\uADF8 \uCD9C\uB825
-    org.hibernate.orm.jdbc.bind: TRACE                  # SQL \uBC14\uC778\uB529 \uB85C\uADF8 (\uD30C\uB77C\uBBF8\uD130 \uAC12)
-    org.hibernate.orm.jdbc.extract: TRACE               # SQL \uACB0\uACFC \uCD94\uCD9C \uB85C\uADF8
-    org.springframework.transaction.interceptor: TRACE  # \uD2B8\uB79C\uC7AD\uC158 \uB3D9\uC791 \uB85C\uADF8
+    com.back: DEBUG                                     # com.back 패키지 로그 레벨
+    org.hibernate.SQL: DEBUG                            # SQL 로그 출력
+    org.hibernate.orm.jdbc.bind: TRACE                  # SQL 바인딩 로그 (파라미터 값)
+    org.hibernate.orm.jdbc.extract: TRACE               # SQL 결과 추출 로그
+    org.springframework.transaction.interceptor: TRACE  # 트랜잭션 동작 로그
 
 jwt:
   secret: ${JWT_SECRET:3f1e2a0e-8e8f-4c0a-9d3f-b3fae09e6d5a}
   access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:PT15M}
   refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:PT336H}
 
-cookie:
-  secure: false   # HTTPS \uBCF4\uC548 \uCFE0\uD0A4 \uAC15\uC81C \uC5EC\uBD80
-
 management:
   endpoints:
     web:
       exposure:
-        include: "health"   # /actuator/health \uB9CC \uB178\uCD9C
+        include: "health"   # /actuator/health 만 노출
   endpoint:
     health:
-      show-details: never   # Health \uC0C1\uC138 \uC815\uBCF4 \uBE44\uACF5\uAC1C
+      show-details: never   # Health 상세 정보 비공개
 
 oauth2:
   google:

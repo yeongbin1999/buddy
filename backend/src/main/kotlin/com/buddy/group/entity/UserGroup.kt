@@ -1,7 +1,7 @@
 package com.buddy.group.entity
 
 import com.buddy.global.entity.BaseEntity
-import com.buddy.interest.InterestType
+import com.buddy.user.entity.InterestType
 import com.buddy.user.entity.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -14,27 +14,25 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "user_groups")
-class UserGroup(
+class UserGroup : BaseEntity() {
 
     @Column(nullable = false, length = 100)
-    var name: String,
+    lateinit var name: String
 
     @Column(nullable = false, length = 255)
-    var description: String,
+    lateinit var description: String
 
     @Column(nullable = false, length = 50)
-    var location: String,
+    lateinit var location: String
 
     @Column(nullable = false)
-    var maxMembers: Int,
+    var maxMembers: Int = 0
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = false)
-    var createdBy: User,
+    lateinit var createdBy: User
 
-    // 모임은 관심사 하나만 지정
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
-    var interest: InterestType
-
-) : BaseEntity()
+    lateinit var interest: InterestType
+}

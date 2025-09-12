@@ -10,19 +10,18 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "user_providers")
-class UserProvider(
+class UserProvider : BaseEntity() {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    var user: User,
+    lateinit var user: User
 
     @Column(nullable = false, length = 20)
-    var provider: String, // "google", "naver", "kakao"
+    lateinit var provider: String // "google", "naver", "kakao"
 
     @Column(nullable = false, length = 100)
-    var providerUserId: String, // OAuth 플랫폼이 주는 고유 ID
+    lateinit var providerUserId: String // OAuth 플랫폼이 주는 고유 ID
 
     @Column(nullable = true, length = 100)
     var email: String? = null
-
-) : BaseEntity()
+}
