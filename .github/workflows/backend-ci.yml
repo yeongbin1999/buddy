@@ -11,7 +11,7 @@ on:
 
 # 같은 브랜치에서 연속 트리거 시 이전 잡 취소 (중복/불필요 비용 절감)
 concurrency:
-  group: backend-ci-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name }}
   cancel-in-progress: true
 
 # 최소 권한 원칙
