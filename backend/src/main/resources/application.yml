@@ -17,6 +17,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
+        time_zone: UTC                      # UTC 시간대 설정 (서버와 DB 시간대 일치)
         format_sql: true                    # SQL 포맷팅해서 출력
         highlight_sql: true                 # SQL 색상 하이라이트
         use_sql_comments: true              # SQL에 주석 추가

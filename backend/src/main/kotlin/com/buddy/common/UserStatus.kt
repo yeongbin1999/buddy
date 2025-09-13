@@ -1,7 +1,7 @@
-package com.buddy.user.entity
+package com.buddy.common
 
 enum class UserStatus {
-    INCOMPLETE,  // OAuth 로그인 직후, 프로필 미완성
+    INCOMPLETE,  // 프로필 미완성
     ACTIVE,      // 프로필 완료
     DELETED      // 탈퇴 처리
 }

@@ -2,12 +2,10 @@ package com.buddy
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
-@EnableJpaAuditing
 @SpringBootApplication
-class Application
+class BuddyApplication
 
 fun main(args: Array<String>) {
-    runApplication<Application>(*args)
+    runApplication<BuddyApplication>(*args)
 }

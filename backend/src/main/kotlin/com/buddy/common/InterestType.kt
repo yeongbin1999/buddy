@@ -1,4 +1,4 @@
-package com.buddy.user.entity
+package com.buddy.common
 
 enum class InterestType(val label: String) {
     RUNNING("러닝"),
