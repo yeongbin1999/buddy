@@ -36,6 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 
-db_dev.mv.db
-db_dev.trace.db
+buddy_db_dev.mv.db
+buddy_db_dev.trace.db
 .env
