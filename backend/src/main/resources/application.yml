@@ -7,7 +7,7 @@ spring:
 
   autoconfigure:
     exclude:
-      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+#      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
       - org.springframework.boot.autoconfigure.session.SessionAutoConfiguration
 
   jpa:
@@ -17,6 +17,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
+        time_zone: UTC                      # UTC 시간대 설정 (서버와 DB 시간대 일치)
         format_sql: true                    # SQL 포맷팅해서 출력
         highlight_sql: true                 # SQL 색상 하이라이트
         use_sql_comments: true              # SQL에 주석 추가
@@ -25,10 +26,10 @@ spring:
         generate_statistics: true           # Hibernate 통계 출력 (캐시 히트율, 쿼리 횟수 등)
 
   datasource:
-    url: jdbc:h2:./db_dev;MODE=MySQL   # H2 데이터베이스 (MySQL 호환 모드)
-    driver-class-name: org.h2.Driver   # H2 드라이버
-    username: sa                       # 기본 사용자
-    password:                          # 비밀번호 없음
+    url: jdbc:h2:./buddy_db_dev;MODE=MySQL  # H2 데이터베이스 (MySQL 호환 모드)
+    driver-class-name: org.h2.Driver        # H2 드라이버
+    username: sa                            # 기본 사용자
+    password:                               # 비밀번호 없음
 
   jackson:
     serialization:

@@ -4,7 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
-    kotlin("plugin.jpa") version "1.9.25"
+    kotlin("plugin.jpa") version "2.0.0"
 }
 
 group = "com.back"
@@ -36,6 +36,7 @@ dependencies {
 
     // --- Database ---
     runtimeOnly("com.mysql:mysql-connector-j")
+    runtimeOnly("com.h2database:h2")
 
     // --- Redis & Session ---
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
@@ -52,11 +53,13 @@ dependencies {
     // --- Dotenv ---
     implementation("me.paulschwarz:spring-dotenv:4.0.0")
 
+    // --- Parser ---
+    implementation("com.univocity:univocity-parsers:2.9.1")
+
     // --- Testing ---
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
-    runtimeOnly("com.h2database:h2")
 }
 
 tasks.withType<Test> {
