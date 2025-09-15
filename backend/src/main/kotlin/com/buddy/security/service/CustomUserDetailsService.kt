@@ -10,9 +10,6 @@ class CustomUserDetailsService(
     val userService: UserService
 ) : UserDetailsService {
 
-    override fun loadUserByUsername(email: String): CustomUserDetails =
-        CustomUserDetails(userService.findByEmail(email))
-
-    fun loadUserById(userId: String): CustomUserDetails =
+    override fun loadUserByUsername(userId: String): CustomUserDetails =
         CustomUserDetails(userService.findById(userId.toInt()))
 }

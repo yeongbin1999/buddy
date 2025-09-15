@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity
 fun <T> T.toSuccessResponse(msg: String = "성공"): ResponseEntity<RsData<T>> =
     ResponseEntity.ok(RsData.success(msg, this))
 
+fun toSuccessResponseWithoutData(msg: String = "성공"): ResponseEntity<RsData<Unit>> =
+    ResponseEntity.ok(RsData.success(msg))
+
 // 실패 응답 확장
 fun ErrorCode.toFailResponse(customMsg: String? = null): ResponseEntity<RsData<Nothing>> =
     ResponseEntity.status(this.status)
         .body(RsData.fail(this, customMsg))
-
-fun toSuccessResponseWithoutData(msg: String = "성공"): ResponseEntity<RsData<Unit>> =
-    ResponseEntity.ok(RsData.success(msg))

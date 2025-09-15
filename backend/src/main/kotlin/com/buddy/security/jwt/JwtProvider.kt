@@ -2,6 +2,7 @@ package com.buddy.security.jwt
 
 import com.buddy.global.exception.ErrorCode
 import com.buddy.security.exception.JwtAuthenticationException
+import com.buddy.security.service.CustomUserDetails
 import io.jsonwebtoken.*
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
@@ -26,7 +27,7 @@ class JwtProvider(
 
         return Jwts.builder()
             .setSubject(userDetails.id.toString())
-            .claim("nickname", userDetails.nickname)
+            .claim("nickname", userDetails.name)
             .claim("role", userDetails.role.name)
             .setIssuedAt(now)
             .setExpiration(expiryDate)

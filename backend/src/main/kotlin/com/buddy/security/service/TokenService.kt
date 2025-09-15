@@ -34,7 +34,7 @@ class TokenService(
         }
 
         val userId = jwtProvider.getUserIdFromToken(presentedRefreshToken)
-        val userDetails = customUserDetailsService.loadUserById(userId)
+        val userDetails = customUserDetailsService.loadUserByUsername(userId)
         val newAccessToken = jwtProvider.createAccessToken(userDetails)
         val newRefreshToken = jwtProvider.createRefreshToken(userDetails)
 
