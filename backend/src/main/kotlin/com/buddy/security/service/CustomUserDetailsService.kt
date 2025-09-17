@@ -10,5 +10,5 @@ class CustomUserDetailsService(
 ) : UserDetailsService {
 
     override fun loadUserByUsername(userId: String): CustomUserDetails =
-        CustomUserDetails(userService.findById(userId.toInt()))
+        CustomUserDetails(userService.findById(userId.toLong()))
 }

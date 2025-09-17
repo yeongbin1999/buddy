@@ -48,9 +48,10 @@ data class OAuthAttributes(
             if (profileImageUrl != null) {
                 modifiedAttributes["profileImageUrl"] = profileImageUrl
             }
+            val nonNullAttributes = modifiedAttributes.filterValues { it != null } as Map<String, Any>
 
             return OAuthAttributes(
-                attributes = modifiedAttributes as Map<String, Any>,
+                attributes = nonNullAttributes,
                 providerId = providerId,
                 name = name,
                 email = email,

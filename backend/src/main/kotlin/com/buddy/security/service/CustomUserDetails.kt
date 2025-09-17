@@ -1,7 +1,7 @@
 package com.buddy.security.service
 
-import com.buddy.common.UserRole
 import com.buddy.domain.user.entity.User
+import com.buddy.enum.UserRole
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

@@ -1,6 +1,6 @@
 package com.buddy.global.extension
 
-import com.buddy.global.dto.RsData
+import com.buddy.common.RsData
 import com.buddy.global.exception.ErrorCode
 import org.springframework.http.ResponseEntity
 

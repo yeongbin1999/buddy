@@ -1,8 +1,8 @@
 package com.buddy.domain.chat.entity
 
-import com.buddy.common.ChatMessageType
-import com.buddy.global.entity.BaseEntity
 import com.buddy.domain.user.entity.User
+import com.buddy.enum.ChatMessageType
+import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 
 @Entity
@@ -33,9 +33,6 @@ open class ChatMessage : BaseEntity() {
 
     @Column(name = "text", length = 2000)
     var text: String? = null
-
-    @Column(name = "image_url", length = 512)
-    var imageUrl: String? = null
 
     @Column(name = "is_deleted", nullable = false)
     var isDeleted: Boolean = false

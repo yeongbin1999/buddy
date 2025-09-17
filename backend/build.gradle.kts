@@ -57,6 +57,9 @@ dependencies {
     // --- Parser ---
     implementation("com.univocity:univocity-parsers:2.9.1")
 
+    // --- AWS S3 ---
+    implementation("com.amazonaws:aws-java-sdk-s3:1.12.740") // 최신 버전 확인 필요
+
     // --- Testing ---
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")

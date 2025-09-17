@@ -47,7 +47,7 @@ class OAuthService(
         val userDetails: CustomUserDetails = authService.findOrCreateOAuthUser(
             providerId = oAuthAttributes.providerId,
             email = oAuthAttributes.email,
-            nickname = oAuthAttributes.name,
+            name = oAuthAttributes.name,
             profileImageUrl = oAuthAttributes.attributes["profileImageUrl"] as? String,
             provider = provider.lowercase()
         )

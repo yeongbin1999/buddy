@@ -1,4 +1,4 @@
-package com.buddy.common
+package com.buddy.enum
 
 enum class GroupMemberStatus {
     APPLIED,

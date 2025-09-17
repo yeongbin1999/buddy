@@ -1,8 +1,10 @@
 package com.buddy.domain.group.entity
 
-import com.buddy.common.InterestType
+import com.buddy.domain.chat.entity.ChatRoom
 import com.buddy.domain.region.entity.RegionMunicipality
 import com.buddy.domain.user.entity.User
+import com.buddy.enum.GroupMemberStatus
+import com.buddy.enum.InterestType
 import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 
@@ -15,7 +17,7 @@ import jakarta.persistence.*
         Index(name = "idx_groups_owner", columnList = "owner_id")
     ]
 )
-open class Group(
+class Group(
     @Column(name = "title", nullable = false, length = 60)
     var title: String,
 
@@ -43,14 +45,23 @@ open class Group(
         nullable = false,
         foreignKey = ForeignKey(name = "fk_groups_owner")
     )
-    var owner: User
+    var owner: User,
+
+    @Column(name = "min_member_count", nullable = false)
+    var minMemberCount: Int,
+
+    @Column(name = "max_member_count", nullable = false)
+    var maxMemberCount: Int
 ) : BaseEntity() {
 
     @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     var members: MutableList<GroupMember> = mutableListOf()
 
+    @OneToOne(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    var chatRoom: ChatRoom? = null
+
     /** 승인된 멤버 수 반환 */
     fun getApprovedMemberCount(): Int {
-        return members.count { it.status == com.buddy.common.GroupMemberStatus.APPROVED }
+        return members.count { it.status == GroupMemberStatus.APPROVED }
     }
 }

@@ -1,8 +1,8 @@
 package com.buddy.domain.group.entity
 
-import com.buddy.common.GroupMemberStatus
-import com.buddy.common.GroupRole
 import com.buddy.domain.user.entity.User
+import com.buddy.enum.GroupMemberStatus
+import com.buddy.enum.GroupRole
 import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 
@@ -21,7 +21,7 @@ import jakarta.persistence.*
         Index(name = "idx_group_member_status", columnList = "status")
     ]
 )
-open class GroupMember(
+class GroupMember(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id", nullable = false, foreignKey = ForeignKey(name = "fk_member_group"))
     var group: Group,

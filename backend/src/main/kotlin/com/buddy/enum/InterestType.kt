@@ -1,6 +1,6 @@
-package com.buddy.common
+package com.buddy.enum
 
-enum class InterestType(val label: String) {
+enum class InterestType(val description: String) {
     RUNNING("러닝"),
     READING("독서"),
     GAMING("게임"),

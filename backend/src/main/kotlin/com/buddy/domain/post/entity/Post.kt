@@ -1,4 +1,4 @@
-package com.buddy.board.entity
+package com.buddy.domain.post.entity
 
 import com.buddy.domain.group.entity.Group
 import com.buddy.domain.user.entity.User
@@ -13,15 +13,14 @@ import jakarta.persistence.*
         Index(name = "idx_board_post_group_timeline", columnList = "group_id, id")
     ]
 )
-open class Post : BaseEntity() {
-
+open class Post(
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "group_id",
         nullable = false,
         foreignKey = ForeignKey(name = "fk_post_group")
     )
-    lateinit var group: Group
+    var group: Group,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -29,15 +28,17 @@ open class Post : BaseEntity() {
         nullable = false,
         foreignKey = ForeignKey(name = "fk_post_author")
     )
-    lateinit var author: User
+    var author: User,
 
     @Column(name = "title", length = 120)
-    var title: String? = null
+    var title: String? = null,
 
     @Lob
     @Column(name = "content", nullable = false)
-    lateinit var content: String
+    var content: String,
 
     @Column(name = "is_deleted", nullable = false)
     var isDeleted: Boolean = false
+) : BaseEntity() {
+
 }

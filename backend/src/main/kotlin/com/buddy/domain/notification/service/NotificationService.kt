@@ -30,6 +30,24 @@ class NotificationService(
     messaging.convertAndSendToUser(userId.toString(), "/queue/notifications", saved.toDto())
   }
 
+  @Transactional
+  fun sendNotification(
+    receiver: com.buddy.domain.user.entity.User,
+    notificationType: com.buddy.enum.NotificationType,
+    title: String,
+    content: String,
+    relatedId: Long?
+  ) {
+    val dataJson = relatedId?.let { "{\"relatedId\":$it}" }
+    createAndSend(
+      userId = receiver.id!!,
+      type = notificationType.name,
+      title = title,
+      message = content,
+      dataJson = dataJson
+    )
+  }
+
   fun unreadCount(userId: Long): Long = notifRepo.countByUserIdAndReadFalse(userId)
 
   @Transactional fun markRead(userId: Long, id: Long) { notifRepo.markRead(id, userId) }

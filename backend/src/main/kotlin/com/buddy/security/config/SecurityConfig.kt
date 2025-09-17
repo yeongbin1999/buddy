@@ -6,6 +6,7 @@ import com.buddy.security.exception.CustomAuthenticationEntryPoint
 import com.buddy.security.filter.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -17,6 +18,7 @@ import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
+@EnableMethodSecurity
 class SecurityConfig(
     private val jwtAuthenticationProvider: JwtAuthenticationProvider,
     private val customAuthenticationEntryPoint: CustomAuthenticationEntryPoint,
@@ -59,6 +61,7 @@ class SecurityConfig(
                 ).permitAll()
 
                 // 인증 필요
+                it.requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
 
                 // 나머지 요청
                 it.anyRequest().authenticated()
