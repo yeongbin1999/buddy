@@ -1,9 +1,9 @@
 package com.buddy.domain.group.entity
 
 import com.buddy.common.InterestType
-import com.buddy.global.entity.BaseEntity
 import com.buddy.domain.region.entity.RegionMunicipality
 import com.buddy.domain.user.entity.User
+import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 
 @Entity
@@ -15,17 +15,19 @@ import jakarta.persistence.*
         Index(name = "idx_groups_owner", columnList = "owner_id")
     ]
 )
-open class Group : BaseEntity() {
-
+open class Group(
     @Column(name = "title", nullable = false, length = 60)
-    lateinit var title: String
+    var title: String,
 
     @Column(name = "description", nullable = false, length = 500)
-    lateinit var description: String
+    var description: String,
+
+    @Column(name = "image_url", nullable = false, length = 512)
+    var imageUrl: String,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "interest", nullable = false, length = 30)
-    var interest: InterestType = InterestType.STUDY
+    var interest: InterestType,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -33,10 +35,7 @@ open class Group : BaseEntity() {
         nullable = false,
         foreignKey = ForeignKey(name = "fk_groups_municipality")
     )
-    var municipality: RegionMunicipality? = null
-
-    @Column(name = "image_url", nullable = false, length = 512)
-    lateinit var imageUrl: String
+    var municipality: RegionMunicipality,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -44,5 +43,14 @@ open class Group : BaseEntity() {
         nullable = false,
         foreignKey = ForeignKey(name = "fk_groups_owner")
     )
-    var owner: User? = null
+    var owner: User
+) : BaseEntity() {
+
+    @OneToMany(mappedBy = "group", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    var members: MutableList<GroupMember> = mutableListOf()
+
+    /** 승인된 멤버 수 반환 */
+    fun getApprovedMemberCount(): Int {
+        return members.count { it.status == com.buddy.common.GroupMemberStatus.APPROVED }
+    }
 }

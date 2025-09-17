@@ -27,7 +27,7 @@ class JwtProvider(
 
         return Jwts.builder()
             .setSubject(userDetails.id.toString())
-            .claim("nickname", userDetails.name)
+            .claim("name", userDetails.name)
             .claim("role", userDetails.role.name)
             .setIssuedAt(now)
             .setExpiration(expiryDate)

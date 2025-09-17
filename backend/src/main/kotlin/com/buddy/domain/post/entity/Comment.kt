@@ -1,7 +1,7 @@
 package com.buddy.board.entity
 
-import com.buddy.global.entity.BaseEntity
 import com.buddy.domain.user.entity.User
+import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 
 @Entity
@@ -11,7 +11,7 @@ import jakarta.persistence.*
         Index(name = "idx_board_comment_post_timeline", columnList = "post_id, id")
     ]
 )
-open class BoardComment : BaseEntity() {
+open class Comment : BaseEntity() {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -19,7 +19,7 @@ open class BoardComment : BaseEntity() {
         nullable = false,
         foreignKey = ForeignKey(name = "fk_comment_post")
     )
-    lateinit var post: BoardPost
+    lateinit var post: Post
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -31,7 +31,7 @@ open class BoardComment : BaseEntity() {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", foreignKey = ForeignKey(name = "fk_comment_parent"))
-    var parent: BoardComment? = null
+    var parent: Comment? = null
 
     @Column(name = "content", nullable = false, length = 1000)
     lateinit var content: String

@@ -1,6 +1,5 @@
 package com.buddy.domain.user.entity
 
-import com.buddy.common.AuthProvider
 import com.buddy.common.InterestType
 import com.buddy.common.UserRole
 import com.buddy.common.UserStatus
@@ -24,15 +23,20 @@ import java.time.LocalDate
     ]
 )
 open class User(
-    @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false, length = 20)
-    var provider: AuthProvider,
+    var provider: String,
 
     @Column(name = "provider_user_id", nullable = false, length = 100)
     var providerId: String,
 
+    @Column(name = "nickname", nullable = false, length = 30)
+    var email: String,
+
     @Column(name = "name", length = 50)
     var name: String? = null,
+
+    @Column(name = "profile_image_url", length = 250)
+    var profileImageUrl: String? = null,
 
     @Column(name = "birthdate")
     var birthdate: LocalDate? = null,

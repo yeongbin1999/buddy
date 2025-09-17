@@ -1,6 +1,5 @@
 package com.buddy.security.service
 
-
 import com.buddy.domain.user.service.UserService
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service

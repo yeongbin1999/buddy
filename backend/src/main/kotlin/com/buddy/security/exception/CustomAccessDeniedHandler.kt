@@ -16,13 +16,13 @@ class CustomAccessDeniedHandler (
 ) : AccessDeniedHandler {
 
     override fun handle(
-        request: HttpServletRequest?, response: HttpServletResponse,
+        request: HttpServletRequest, response: HttpServletResponse,
         accessDeniedException: AccessDeniedException
     ) {
-        response.contentType ="application/json;charset=UTF-8"
+        response.contentType = "application/json;charset=UTF-8"
         response.status = HttpServletResponse.SC_FORBIDDEN
 
-        val body = fail<Void>(ErrorCode.AUTH_FORBIDDEN)
+        val body = fail(ErrorCode.AUTH_FORBIDDEN)
 
         val json = objectMapper.writeValueAsString(body)
         response.outputStream.write(json.toByteArray(StandardCharsets.UTF_8))

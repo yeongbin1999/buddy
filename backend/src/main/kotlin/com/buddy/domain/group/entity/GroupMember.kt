@@ -2,8 +2,8 @@ package com.buddy.domain.group.entity
 
 import com.buddy.common.GroupMemberStatus
 import com.buddy.common.GroupRole
-import com.buddy.global.entity.BaseEntity
 import com.buddy.domain.user.entity.User
+import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 
 @Entity
@@ -21,15 +21,10 @@ import jakarta.persistence.*
         Index(name = "idx_group_member_status", columnList = "status")
     ]
 )
-open class GroupMember : BaseEntity() {
-
+open class GroupMember(
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "group_id",
-        nullable = false,
-        foreignKey = ForeignKey(name = "fk_member_group")
-    )
-    lateinit var group: Group
+    @JoinColumn(name = "group_id", nullable = false, foreignKey = ForeignKey(name = "fk_member_group"))
+    var group: Group,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -37,13 +32,15 @@ open class GroupMember : BaseEntity() {
         nullable = false,
         foreignKey = ForeignKey(name = "fk_member_user")
     )
-    lateinit var user: User
+    var user: User,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, length = 20)
-    var role: GroupRole = GroupRole.MEMBER
+    var role: GroupRole = GroupRole.MEMBER,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     var status: GroupMemberStatus = GroupMemberStatus.APPLIED
+) : BaseEntity() {
+
 }
