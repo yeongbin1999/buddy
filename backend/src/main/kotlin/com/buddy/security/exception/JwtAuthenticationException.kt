@@ -10,7 +10,7 @@ class JwtAuthenticationException : AuthenticationException {
         this.errorCode = errorCode
     }
 
-    constructor(errorCode: ErrorCode, cause: Throwable?) : super(errorCode.message, cause) {
+    constructor(errorCode: ErrorCode, cause: Throwable) : super(errorCode.message, cause) {
         this.errorCode = errorCode
     }
 }

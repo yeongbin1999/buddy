@@ -1,8 +1,8 @@
-package com.buddy.photo.entity
+package com.buddy.domain.photo.entity
 
-import com.buddy.global.entity.BaseEntity
 import com.buddy.domain.group.entity.Group
 import com.buddy.domain.user.entity.User
+import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 
 @Entity
@@ -12,7 +12,7 @@ import jakarta.persistence.*
         Index(name = "idx_group_photo_group_timeline", columnList = "group_id, id")
     ]
 )
-open class GroupPhoto : BaseEntity() {
+open class Photo : BaseEntity() {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(

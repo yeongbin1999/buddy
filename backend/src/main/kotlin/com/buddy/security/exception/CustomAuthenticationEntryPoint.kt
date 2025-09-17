@@ -1,6 +1,5 @@
 package com.buddy.security.exception
 
-import com.buddy.global.dto.RsData
 import com.buddy.global.dto.RsData.Companion.fail
 import com.buddy.global.exception.ErrorCode
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -17,20 +16,18 @@ class CustomAuthenticationEntryPoint (
 ) : AuthenticationEntryPoint {
 
     override fun commence(
-        request: HttpServletRequest?, response: HttpServletResponse,
-        authException: AuthenticationException?
+        request: HttpServletRequest, response: HttpServletResponse,
+        authException: AuthenticationException
     ) {
-        response.setContentType("application/json;charset=UTF-8")
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED)
+        response.contentType = "application/json;charset=UTF-8"
+        response.status = HttpServletResponse.SC_UNAUTHORIZED
 
-        val body: RsData<Void?>?
-
-        if (authException is JwtAuthenticationException) {
+        val body = if (authException is JwtAuthenticationException) {
             // 커스텀 예외에 담긴 세부 에러 코드로 응답
-            body = fail<Void?>(authException.errorCode)
+            fail(authException.errorCode)
         } else {
             // 기타 인증 예외는 기본 Unauthorized 응답
-            body = fail<Void?>(ErrorCode.AUTH_UNAUTHORIZED)
+            fail(ErrorCode.AUTH_UNAUTHORIZED)
         }
 
         val json = objectMapper.writeValueAsString(body)

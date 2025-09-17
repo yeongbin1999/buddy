@@ -11,9 +11,9 @@ class CustomUserDetails(user: User) : UserDetails {
     val id: Long? = user.id
     val name: String? = user.name
     val role: UserRole = user.role
-    private val _authorities: List<GrantedAuthority> = listOf(SimpleGrantedAuthority(user.role.roleName))
+    private val authorities: List<GrantedAuthority> = listOf(SimpleGrantedAuthority(user.role.roleName))
 
-    override fun getAuthorities(): Collection<GrantedAuthority> = _authorities
+    override fun getAuthorities(): Collection<GrantedAuthority> = authorities
     override fun getUsername(): String = id.toString()
     override fun getPassword(): String? = null
     override fun isAccountNonExpired(): Boolean = true
