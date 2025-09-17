@@ -50,16 +50,20 @@ class GroupService(
             maxMemberCount = request.maxMemberCount
         )
 
-        val chatRoom = chatRoomService.createChatRoom(group)
-        group.chatRoom = chatRoom
+        // 1. 그룹을 먼저 저장하여 영속화합니다.
+        val savedGroup = groupRepository.save(group)
+
+        // 2. 영속화된 그룹으로 채팅방을 생성합니다.
+        val chatRoom = chatRoomService.createChatRoom(savedGroup)
+        savedGroup.chatRoom = chatRoom
 
         val groupMember = GroupMember(
-            group = group,
+            group = savedGroup, // 영속화된 그룹 사용
             user = owner,
             role = GroupRole.OWNER,
             status = GroupMemberStatus.APPROVED
         )
-        group.members.add(groupMember)
+        savedGroup.members.add(groupMember)
 
         // 그룹 생성 시 그룹장에게 시스템 메시지 전송
         chatMessageService.createAndSaveMessage(
@@ -69,7 +73,7 @@ class GroupService(
             text = "${owner.name ?: "그룹장"}님이 그룹을 생성하고 채팅방에 입장했습니다."
         )
 
-        return groupRepository.save(group).toResponse()
+        return savedGroup.toResponse()
     }
 
     @Transactional(readOnly = true)
