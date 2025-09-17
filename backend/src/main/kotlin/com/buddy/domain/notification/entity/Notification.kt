@@ -3,7 +3,7 @@ package com.buddy.domain.notification.entity
 import com.buddy.domain.user.entity.User
 import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
-import java.time.Instant
+import java.time.LocalDateTime
 
 @Entity
 @Table(
@@ -33,5 +33,5 @@ open class Notification(
   @Column(name = "`read`", nullable = false)
   var read: Boolean = false
 ) : BaseEntity() {
-  @Column(name="read_at") var readAt: Instant? = null
+  @Column(name="read_at") var readAt: LocalDateTime? = null
 }
