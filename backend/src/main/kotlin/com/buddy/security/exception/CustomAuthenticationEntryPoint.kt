@@ -1,6 +1,6 @@
 package com.buddy.security.exception
 
-import com.buddy.global.dto.RsData.Companion.fail
+import com.buddy.common.RsData.Companion.fail
 import com.buddy.global.exception.ErrorCode
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.http.HttpServletRequest

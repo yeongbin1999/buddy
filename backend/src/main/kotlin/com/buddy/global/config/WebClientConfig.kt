@@ -1,4 +1,4 @@
-package com.buddy.security.config
+package com.buddy.global.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

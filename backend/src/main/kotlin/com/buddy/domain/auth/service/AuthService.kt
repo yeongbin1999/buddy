@@ -29,7 +29,7 @@ class AuthService(
     fun findOrCreateOAuthUser(
         providerId: String,
         email: String,
-        nickname: String,
+        name: String,
         profileImageUrl: String?,
         provider: String
     ): CustomUserDetails {
@@ -39,7 +39,7 @@ class AuthService(
                     provider = provider,
                     providerId = providerId,
                     email = email,
-                    name = nickname,
+                    name = name,
                     profileImageUrl = profileImageUrl
                 )
             )

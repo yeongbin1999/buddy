@@ -1,4 +1,4 @@
-package com.buddy.global.dto
+package com.buddy.common
 
 import com.buddy.global.exception.ErrorCode
 import com.fasterxml.jackson.annotation.JsonInclude
@@ -9,9 +9,6 @@ data class RsData<out T>(
     val msg: String? = null,
     val data: T? = null
 ) {
-    val isSuccess: Boolean get() = resultCode.startsWith("SUCCESS")
-    val isFail: Boolean get() = !isSuccess
-
     companion object {
         // 데이터 있는 성공
         fun <T> success(msg: String = "성공", data: T): RsData<T> =

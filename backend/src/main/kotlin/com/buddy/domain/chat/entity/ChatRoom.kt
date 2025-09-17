@@ -14,13 +14,13 @@ import jakarta.persistence.*
         )
     ]
 )
-open class ChatRoom : BaseEntity() {
-
+open class ChatRoom(
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(
         name = "group_id",
         nullable = false,
         foreignKey = ForeignKey(name = "fk_chat_room_group")
     )
-    lateinit var group: Group
+    var group: Group
+) : BaseEntity() {
 }

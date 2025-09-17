@@ -1,6 +1,6 @@
 package com.buddy.global.exception
 
-import com.buddy.global.dto.RsData
+import com.buddy.common.RsData
 import com.buddy.global.extension.toFailResponse
 import org.springframework.dao.OptimisticLockingFailureException
 import org.springframework.http.ResponseEntity

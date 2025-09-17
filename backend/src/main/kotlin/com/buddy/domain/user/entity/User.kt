@@ -1,12 +1,13 @@
 package com.buddy.domain.user.entity
 
-import com.buddy.common.InterestType
-import com.buddy.common.UserRole
-import com.buddy.common.UserStatus
 import com.buddy.domain.region.entity.RegionMunicipality
+import com.buddy.enum.InterestType
+import com.buddy.enum.UserRole
+import com.buddy.enum.UserStatus
 import com.buddy.global.entity.BaseEntity
 import jakarta.persistence.*
 import java.time.LocalDate
+
 
 @Entity
 @Table(
@@ -29,7 +30,7 @@ open class User(
     @Column(name = "provider_user_id", nullable = false, length = 100)
     var providerId: String,
 
-    @Column(name = "nickname", nullable = false, length = 30)
+    @Column(name = "email", nullable = false, length = 50)
     var email: String,
 
     @Column(name = "name", length = 50)
